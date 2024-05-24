@@ -50,7 +50,7 @@ function moveleft(game){
     console.log(game);
     console.log("the score is: " + score);
     
-    if(checkcomplete){
+    if(checkcomplete(game)){
         reset(game);
         console.log(game);
         console.log("the level is completed and the game has been reset");
@@ -85,7 +85,7 @@ function moveright(game){
     console.log(game);
     console.log("the score is: " + score);
     
-    if(checkcomplete){
+    if(checkcomplete(game)){
         reset(game);
         console.log(game);
         console.log("the level has been completed and the game has been reset");
