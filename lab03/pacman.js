@@ -49,6 +49,13 @@ function moveleft(game){
     }
     console.log(game);
     console.log("the score is: " + score);
+    
+    if(checkcomplete){
+        reset(game);
+        console.log(game);
+        console.log("the level is completed and the game has been reset");
+    }
+    
     return game;
 
 }
@@ -77,9 +84,30 @@ function moveright(game){
     }
     console.log(game);
     console.log("the score is: " + score);
+    
+    if(checkcomplete){
+        reset(game);
+        console.log(game);
+        console.log("the level has been completed and the game has been reset");
+    }
+    
     return game;
     
 }
+
+function checkcomplete(game){
+    for(var i = 0; i < game.length; i++){
+        if(game[i] == "."){
+            return false;
+        }
+    } return true
+}
+
+function reset(game){
+    game = createGame(game.length);
+    return game;
+}
+
 
 
 var boardgame = createGame(10);
