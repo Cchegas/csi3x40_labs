@@ -1,6 +1,7 @@
 pacmanindex = 0;
 fruitindex = 0;
 ghostindex = 0;
+score = 0;
 
 function createGame(n) {
     board = [];
@@ -23,33 +24,64 @@ function createGame(n) {
 
 }
 
-function moveleft(game) {
+
+function moveleft(game){
+    n = game.length;
     if(pacmanindex == 0){
-        game[pacmanindex] = "";
-        pacmanindex = n-1;
-        game[pacmanindex] = "C";
+        if(game[n-1] = "."){
+            score += 1;
+            game[pacmanindex] = "";
+            pacmanindex = 0;
+            game[pacmanindex] = "C";
+        }
+        else{
+            game[pacmanindex] = "";
+            pacmanindex = 0;
+            game[pacmanindex] = "C";
+        }
+
     }
-    else{
+    else if(game[pacmanindex-1] == "."){
+        score += 1;
         game[pacmanindex] = "";
         pacmanindex--;
         game[pacmanindex] = "C";
     }
+    console.log(game);
+    console.log("the score is: " + score);
     return game;
+
 }
 
 function moveright(game){
+    n = game.length;
     if(pacmanindex == n-1){
-        game[pacmanindex] = "";
-        pacmanindex = 0;
-        game[pacmanindex] = "C";
+        if(game[0] = "."){
+            score += 1;
+            game[pacmanindex] = "";
+            pacmanindex = 0;
+            game[pacmanindex] = "C";
+        }
+        else{
+            game[pacmanindex] = "";
+            pacmanindex = 0;
+            game[pacmanindex] = "C";
+        }
+        
     }
-    else{
+    else if(game[pacmanindex+1] == "."){
+        score += 1;
         game[pacmanindex] = "";
         pacmanindex++;
         game[pacmanindex] = "C";
     }
+    console.log(game);
+    console.log("the score is: " + score);
     return game;
+    
 }
 
 
-createGame(10);
+var boardgame = createGame(10);
+
+moveleft(boardgame);
