@@ -1,10 +1,10 @@
-pacmanindex = 0;
-fruitindex = 0;
-ghostindex = 0;
-score = 0;
+let pacmanindex = 0;
+let fruitindex = 0;
+let ghostindex = 0;
+let score = 0;
 
 function createGame(n) {
-    board = [];
+    let board = [];
 
     pacmanindex = n-6;
     fruitindex = n-2;
@@ -14,102 +14,135 @@ function createGame(n) {
     board[fruitindex] = "@";
     board[ghostindex] = "^";
 
-    for(var i = 0; i< board.length; i++){
-        if(board[i] == null){
+    for (let i = 0; i < n; i++) {
+        if (board[i] == null) {
             board[i] = ".";
         }
     }
     console.log(board);
     return board;
-
 }
 
-
-function moveleft(game){
-    n = game.length;
-    if(pacmanindex == 0){
-        if(game[n-1] = "."){
+function moveleft(game) {
+    let n = game.length;
+    if (pacmanindex == 0) {
+        if (game[n-1] == ".") {
             score += 1;
-            game[pacmanindex] = "";
-            pacmanindex = 0;
+            game[pacmanindex] = ".";
+            pacmanindex = n-1;
+            game[pacmanindex] = "C";
+        } else {
+            game[pacmanindex] = ".";
+            pacmanindex = n-1;
             game[pacmanindex] = "C";
         }
-        else{
-            game[pacmanindex] = "";
-            pacmanindex = 0;
-            game[pacmanindex] = "C";
-        }
-
-    }
-    else if(game[pacmanindex-1] == "."){
+    } else if (game[pacmanindex-1] == ".") {
         score += 1;
-        game[pacmanindex] = "";
+        game[pacmanindex] = ".";
         pacmanindex--;
         game[pacmanindex] = "C";
     }
     console.log(game);
     console.log("the score is: " + score);
-    
-    if(checkcomplete(game)){
-        reset(game);
+
+    if (checkcomplete(game)) {
+        game = reset(game);
         console.log(game);
         console.log("the level is completed and the game has been reset");
     }
-    
-    return game;
 
+    return game;
 }
 
-function moveright(game){
-    n = game.length;
-    if(pacmanindex == n-1){
-        if(game[0] = "."){
+function moveright(game) {
+    let n = game.length;
+    if (pacmanindex == n-1) {
+        if (game[0] == ".") {
             score += 1;
-            game[pacmanindex] = "";
+            game[pacmanindex] = ".";
+            pacmanindex = 0;
+            game[pacmanindex] = "C";
+        } else {
+            game[pacmanindex] = ".";
             pacmanindex = 0;
             game[pacmanindex] = "C";
         }
-        else{
-            game[pacmanindex] = "";
-            pacmanindex = 0;
-            game[pacmanindex] = "C";
-        }
-        
-    }
-    else if(game[pacmanindex+1] == "."){
+    } else if (game[pacmanindex+1] == ".") {
         score += 1;
-        game[pacmanindex] = "";
+        game[pacmanindex] = ".";
         pacmanindex++;
         game[pacmanindex] = "C";
     }
     console.log(game);
     console.log("the score is: " + score);
-    
-    if(checkcomplete(game)){
-        reset(game);
+
+    if (checkcomplete(game)) {
+        game = reset(game);
         console.log(game);
         console.log("the level has been completed and the game has been reset");
     }
-    
+
     return game;
-    
 }
 
-function checkcomplete(game){
-    for(var i = 0; i < game.length; i++){
-        if(game[i] == "."){
+function checkcomplete(game) {
+    for (let i = 0; i < game.length; i++) {
+        if (game[i] == ".") {
             return false;
         }
-    } return true
+    }
+    return true;
 }
 
-function reset(game){
+function reset(game) {
     game = createGame(game.length);
     return game;
 }
 
+function moveGhost(game) {
+    let n = game.length;
+    let direction = Math.random() < 0.5 ? -1 : 1; // Randomly choose -1 (left) or 1 (right)
 
+    if (direction === -1) { // Move left
+        if (ghostindex == 0) {
+            if (game[n-1] == ".") {
+                game[ghostindex] = ".";
+                ghostindex = n-1;
+                game[ghostindex] = "^";
+            } else {
+                game[ghostindex] = ".";
+                ghostindex = n-1;
+                game[ghostindex] = "^";
+            }
+        } else if (game[ghostindex-1] == ".") {
+            game[ghostindex] = ".";
+            ghostindex--;
+            game[ghostindex] = "^";
+        }
+    } else { // Move right
+        if (ghostindex == n-1) {
+            if (game[0] == ".") {
+                game[ghostindex] = ".";
+                ghostindex = 0;
+                game[ghostindex] = "^";
+            } else {
+                game[ghostindex] = ".";
+                ghostindex = 0;
+                game[ghostindex] = "^";
+            }
+        } else if (game[ghostindex+1] == ".") {
+            game[ghostindex] = ".";
+            ghostindex++;
+            game[ghostindex] = "^";
+        }
+    }
+    console.log(game);
+}
 
-var boardgame = createGame(10);
-
+let boardgame = createGame(10);
 moveleft(boardgame);
+
+// Move the ghost every 2 seconds
+setInterval(() => {
+    moveGhost(boardgame);
+}, 2000);
