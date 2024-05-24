@@ -28,22 +28,22 @@ function moveleft(game) {
     if (pacmanindex == 0) {
         if (game[n-1] == ".") {
             score += 1;
-            game[pacmanindex] = ".";
+            game[pacmanindex] = "";
             pacmanindex = n-1;
             game[pacmanindex] = "C";
         } else {
-            game[pacmanindex] = ".";
+            game[pacmanindex] = "";
             pacmanindex = n-1;
             game[pacmanindex] = "C";
         }
     } else if (game[pacmanindex-1] == ".") {
         score += 1;
-        game[pacmanindex] = ".";
+        game[pacmanindex] = "";
         pacmanindex--;
         game[pacmanindex] = "C";
     }
     console.log(game);
-    console.log("the score is: " + score);
+    console.log("Pacman moved left and the score is: " + score);
 
     if (checkcomplete(game)) {
         game = reset(game);
@@ -59,22 +59,22 @@ function moveright(game) {
     if (pacmanindex == n-1) {
         if (game[0] == ".") {
             score += 1;
-            game[pacmanindex] = ".";
+            game[pacmanindex] = "";
             pacmanindex = 0;
             game[pacmanindex] = "C";
         } else {
-            game[pacmanindex] = ".";
+            game[pacmanindex] = "";
             pacmanindex = 0;
             game[pacmanindex] = "C";
         }
     } else if (game[pacmanindex+1] == ".") {
         score += 1;
-        game[pacmanindex] = ".";
+        game[pacmanindex] = "";
         pacmanindex++;
         game[pacmanindex] = "C";
     }
     console.log(game);
-    console.log("the score is: " + score);
+    console.log("pacman moved right and the score is: " + score);
 
     if (checkcomplete(game)) {
         game = reset(game);
@@ -141,7 +141,7 @@ function moveGhost(game) {
 
 let boardgame = createGame(10);
 moveleft(boardgame);
-
+moveright(boardgame);
 // Move the ghost every 2 seconds
 setInterval(() => {
     moveGhost(boardgame);
