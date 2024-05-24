@@ -1,3 +1,7 @@
+pacmanindex = 0;
+fruitindex = 0;
+ghostindex = 0;
+
 function createGame(n) {
     board = [];
 
@@ -18,5 +22,34 @@ function createGame(n) {
     return board;
 
 }
+
+function moveleft(game) {
+    if(pacmanindex == 0){
+        game[pacmanindex] = "";
+        pacmanindex = n-1;
+        game[pacmanindex] = "C";
+    }
+    else{
+        game[pacmanindex] = "";
+        pacmanindex--;
+        game[pacmanindex] = "C";
+    }
+    return game;
+}
+
+function moveright(game){
+    if(pacmanindex == n-1){
+        game[pacmanindex] = "";
+        pacmanindex = 0;
+        game[pacmanindex] = "C";
+    }
+    else{
+        game[pacmanindex] = "";
+        pacmanindex++;
+        game[pacmanindex] = "C";
+    }
+    return game;
+}
+
 
 createGame(10);
