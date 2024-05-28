@@ -4,7 +4,7 @@ let ghostindex = 0;
 let score = 0;
 
 function createGame(n) {
-    let board = [];
+    let board = new Array(n).fill(".");
 
     pacmanindex = n-6;
     fruitindex = n-2;
@@ -14,11 +14,6 @@ function createGame(n) {
     board[fruitindex] = "@";
     board[ghostindex] = "^";
 
-    for (let i = 0; i < n; i++) {
-        if (board[i] == null) {
-            board[i] = ".";
-        }
-    }
     console.log(board);
     return board;
 }
@@ -32,12 +27,17 @@ function moveleft(game) {
             pacmanindex = n-1;
             game[pacmanindex] = "C";
         } else {
+            
             game[pacmanindex] = "";
             pacmanindex = n-1;
             game[pacmanindex] = "C";
         }
     } else if (game[pacmanindex-1] == ".") {
         score += 1;
+        game[pacmanindex] = "";
+        pacmanindex--;
+        game[pacmanindex] = "C";
+    } else{
         game[pacmanindex] = "";
         pacmanindex--;
         game[pacmanindex] = "C";
@@ -72,6 +72,10 @@ function moveright(game) {
         game[pacmanindex] = "";
         pacmanindex++;
         game[pacmanindex] = "C";
+    } else{
+        game[pacmanindex] = "";
+        pacmanindex++;
+        game[pacmanindex] = "C";
     }
     console.log(game);
     console.log("pacman moved right and the score is: " + score);
@@ -95,9 +99,18 @@ function checkcomplete(game) {
 }
 
 function reset(game) {
-    game = createGame(game.length);
-    return game;
+    let n = game.length;
+    pacmanindex = n-6;
+    fruitindex = n-2;
+    ghostindex = n-1;
+    score = 0;
+    let newGame = createGame(n);
+    for(let i = 0; i < n; i++) {
+        game[i] = newGame[i];
+    }
 }
+
+
 
 function moveGhost(game) {
     let n = game.length;
@@ -140,8 +153,20 @@ function moveGhost(game) {
 }
 
 let boardgame = createGame(10);
+
+//manually move left until the game is complete
 moveleft(boardgame);
-moveright(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
+moveleft(boardgame);
 // Move the ghost every 2 seconds
 setInterval(() => {
     moveGhost(boardgame);
